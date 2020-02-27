@@ -26,14 +26,15 @@
 			 {!! Form::select('is_active', array(1 => 'Active', 0 => 'Inactive'),0, ['class' => 'form-control']) !!}
 			
 		</div>
-		<div class='form-group'> 
-			{!! Form::label('password', 'Password:') !!}
-			 {!! Form::text('password', '', ['class' => 'form-control']) !!}
-			
-		</div>
+		
 		<div class='form-group'> 
 			{!! Form::label('photo-id', 'Photo:') !!}
 			 {!! Form::file('photo_id', null, ['class' => 'form-control']) !!}
+			
+		</div>
+		<div class='form-group'> 
+			{!! Form::label('password', 'Password:') !!}
+			 {!! Form::text('password', '', ['class' => 'form-control']) !!}
 			
 		</div>
 		<div class="form-group">
