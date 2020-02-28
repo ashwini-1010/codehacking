@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 use App\Photo;
 use App\Role;
@@ -20,8 +21,7 @@ class AdminUsersController extends Controller
      */
     public function index()
     {
-        //
-        
+       
         $users = User::all();
         return view('admin.users.index', compact('users'));
     }
@@ -126,6 +126,11 @@ class AdminUsersController extends Controller
         
         if($file = $request->file('photo_id')) {
             
+            if($user->photo) {
+                unlink(public_path().$user->photo->file);
+                $user->photo->delete();
+            }
+            
             $name = time().$file->getClientOriginalName();
             $file->move('images', $name);
             
@@ -147,6 +152,16 @@ class AdminUsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
+        $user = User::findorFail($id);
+        
+        unlink(public_path().$user->photo->file);
+        $user->photo->delete();
+        
+        $user->delete();
+        
+        Session::flash("deleted_user", "User has been deleted");
+        
+        return redirect('/admin/users');
     }
 }
